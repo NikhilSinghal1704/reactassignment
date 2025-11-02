@@ -4,10 +4,9 @@ import TaskCard from './components/TaskCard'
 
 function App() {
   const [tasks, setTasks] = useState([])
-  const [filterDate, setFilterDate] = useState('') // yyyy-mm-dd
+  const [filterDate, setFilterDate] = useState('')
   const [showUncompleted, setShowUncompleted] = useState(false)
 
-  // add a new task with ISO date
   const addTask = (taskText) => {
     const newTask = {
       id: Date.now(),
@@ -32,12 +31,11 @@ function App() {
     setTasks(prev => prev.filter(t => !t.completed))
   }
 
-  // compute filtered tasks
   const filteredTasks = useMemo(() => {
     return tasks.filter(task => {
       if (filterDate) {
-        // compare date portion
-        const taskDate = task.date.slice(0, 10) // yyyy-mm-dd
+        
+        const taskDate = task.date.slice(0, 10)
         if (taskDate !== filterDate) return false
       }
       if (showUncompleted && task.completed) return false
@@ -47,12 +45,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 p-4">
-      {/* Top input bar */}
+      
       <TextInput onAddTask={addTask} />
 
-      {/* Lower split area */}
       <div className="mt-4 grid grid-cols-4 gap-4">
-        {/* Left: filters */}
         <div className="col-span-1 bg-white p-4 rounded shadow">
           <h3 className="font-semibold mb-2">Filters</h3>
           <div className="mb-4">
@@ -93,7 +89,6 @@ function App() {
           </div>
         </div>
 
-        {/* Right: tasks list */}
         <div className="col-span-3 bg-white p-4 rounded shadow">
           <h3 className="font-semibold mb-2">Tasks</h3>
           {filteredTasks.length === 0 ? (
